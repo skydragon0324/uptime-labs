@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000" # Expose backend API on port 5000
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Expose frontend on port 3000
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000 # Set the API URL for frontend
+    depends_on:
+      - backend # Ensure the backend is started before the frontend
+
